@@ -21,7 +21,7 @@
     }
   ],
   "index-file": "index.html",
-  "uuid": "553aaa0c-2a3e-4142-8422-624d25ef0aa0",
+  "uuid": "ec0ee4b3-284b-4cdf-84fe-c0a418ce24e0",
   "icon": "app-icon.png",
   "doc-url": "http://evothings.com/2.2/doc/examples/ble-ti-sensortag-sensors.html",
   "long-description": "This app displays all the sensors available in the TI BLE SensorTags.",

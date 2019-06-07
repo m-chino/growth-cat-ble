@@ -5,366 +5,375 @@
 <html>
 
 <head>
-	<meta charset="utf-8" />
-	<meta name="format-detection" content="telephone=no" />
-	<meta name="viewport" content="width=device-width, user-scalable=no,
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, user-scalable=no,
 		shrink-to-fit=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
 
-	<title>TI SensorTag CC2650 &amp; CC2541 Sensors</title>
+    <title>TI SensorTag CC2650 &amp; CC2541 Sensors</title>
 
-	<style>
-		@import 'ui/css/evothings-app.css';
-	</style>
+    <style>
+        @import 'ui/css/evothings-app.css';
+    </style>
 
-	<script>
-	// Redirect console.log to Evothings Workbench.
-	if (window.hyper && window.hyper.log) { console.log = hyper.log }
-	</script>
+    <script>
+        // Redirect console.log to Evothings Workbench.
+        if (window.hyper && window.hyper.log) {
+            console.log = hyper.log
+        }
+    </script>
 
-	<script src="cordova.js"></script>
+    <script src="cordova.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
-	<script src="libs/evothings/evothings.js"></script>
-	<script src="libs/evothings/ui/ui.js"></script>
-	<script src="libs/evothings/tisensortag/tisensortag.js"></script>
+    <script src="libs/evothings/evothings.js"></script>
+    <script src="libs/evothings/ui/ui.js"></script>
+    <script src="libs/evothings/tisensortag/tisensortag.js"></script>
 </head>
 
 <body>
 
-	<header>
-		<button class="back" onclick="history.back()">
+    <header>
+        <button class="back" onclick="history.back()">
 			<img src="ui/images/arrow-left.svg" />
 		</button>
-		<img class="logotype" src="ui/images/logo.svg" alt="Evothings" />
-		<!--<button class="menu" onclick=""><img src="ui/images/menu.svg" /></button>-->
-	</header>
+        <img class="logotype" src="ui/images/logo.svg" alt="Evothings" />
+        <!--<button class="menu" onclick=""><img src="ui/images/menu.svg" /></button>-->
+    </header>
 
-	<h1>TI SensorTag CC2650 &amp; CC2541 Sensors</h1>
+    <h1>TI SensorTag CC2650 &amp; CC2541 Sensors</h1>
 
-	<img src="TISensorTagCC2650.png"
-		style="float:right;width:120px;height:auto;"/>
+    <img src="TISensorTagCC2650.png" style="float:right;width:120px;height:auto;" />
 
-	<p>
-		This example works with the <strong>TI SensorTag CC2650</strong>. It also works with the TI SensorTag CC2541 if you modify file index.html. Activate the SensorTag and press Connect to begin.
-	</p>
+    <p>
+        This example works with the <strong>TI SensorTag CC2650</strong>. It also works with the TI SensorTag CC2541 if you modify file index.html. Activate the SensorTag and press Connect to begin.
+    </p>
 
-	<p id="upgradeNotice" class="hidden">
-		<span class="color_softred">Please upgrade the firmware of your SensorTag.</span>
-	</p>
+    <p id="upgradeNotice" class="hidden">
+        <span class="color_softred">Please upgrade the firmware of your SensorTag.</span>
+    </p>
 
-	<button onclick="connect()" class="green">
+    <button onclick="connect()" class="green">
 		Connect
 	</button>
 
-	<button onclick="disconnect()" class="charcoal">
+    <button onclick="disconnect()" class="charcoal">
 		Disconnect
 	</button>
 
-	<p>
-		<strong>Status:</strong> <span id="StatusData">Press Connect to find the nearest SensorTag</span>
-	</p>
+    <p>
+        <strong>Status:</strong> <span id="StatusData">Press Connect to find the nearest SensorTag</span>
+    </p>
 
-	<p>
-		<button onclick="toggleSensors()" class="charcoal">Toggle sensors</button>
-	</p>
+    <p>
+        <button onclick="toggleSensors()" class="charcoal">Toggle sensors</button>
+    </p>
 
-	<h2>Keypress:</h2>
-	<p>
-		<span id="KeypressData">[Waiting for value]</span>
-	</p>
+    <h2>Keypress:</h2>
+    <p>
+        <span id="KeypressData">[Waiting for value]</span>
+    </p>
 
-	<h2>Temperature:</h2>
-	<p>
-		<span id="TemperatureData">[Waiting for value]</span>
-	</p>
+    <h2>Temperature:</h2>
+    <p>
+        <span id="TemperatureData">[Waiting for value]</span>
+    </p>
 
-	<h2>Accelerometer:</h2>
-	<p>
-		<span id="AccelerometerData">[Waiting for value]</span>
-	</p>
+    <h2>Accelerometer:</h2>
+    <p>
+        <span id="AccelerometerData">[Waiting for value]</span>
+    </p>
 
-	<h2>Humidity:</h2>
-	<p>
-		<span id="HumidityData">[Waiting for value]</span>
-	</p>
+    <h2>Humidity:</h2>
+    <p>
+        <span id="HumidityData">[Waiting for value]</span>
+    </p>
 
-	<h2>Magnetometer:</h2>
-	<p>
-		<span id="MagnetometerData">[Waiting for value]</span>
-	</p>
+    <h2>Magnetometer:</h2>
+    <p>
+        <span id="MagnetometerData">[Waiting for value]</span>
+    </p>
 
-	<h2>Barometer:</h2>
-	<p>
-		<span id="BarometerData">[Waiting for value]</span>
-	</p>
+    <h2>Barometer:</h2>
+    <p>
+        <span id="BarometerData">[Waiting for value]</span>
+    </p>
 
-	<h2>Gyroscope:</h2>
-	<p>
-		<span id="GyroscopeData">[Waiting for value]</span>
-	</p>
+    <h2>Gyroscope:</h2>
+    <p>
+        <span id="GyroscopeData">[Waiting for value]</span>
+    </p>
 
-	<div id="Luxometer">
-		<h2>Luxometer:</h2>
-		<p>
-			<span id="LuxometerData">[Waiting for value]</span>
-		</p>
-	</div>
+    <div id="Luxometer">
+        <h2>Luxometer:</h2>
+        <p>
+            <span id="LuxometerData">[Waiting for value]</span>
+        </p>
+    </div>
 
-	<h2>Device info:</h2>
-	<p>
-		SensorTag device model: <span id="DeviceModel">?</span><br />
-		Firmware version: <span id="FirmwareData">?</span>
-	</p>
+    <h2>Device info:</h2>
+    <p>
+        SensorTag device model: <span id="DeviceModel">?</span><br /> Firmware version: <span id="FirmwareData">?</span>
+    </p>
 
-	<script>
-	// SensorTag object.
-    var sensortag
-    
-    // timestamp型のフォーマットで現在日時を取得する
-    function getNowDate() {
-        // TODO UTCのままなのでJSTにしたい
-        var date = new Date()
-        var format = 'YYYY-MM-DDThh:mm:ss'
+    <script>
+        // SensorTag object.
+        var sensortag
 
-        format = format.replace(/YYYY/g, date.getFullYear());
-        format = format.replace(/MM/g, ('0' + (date.getMonth() + 1)).slice(-2));
-        format = format.replace(/DD/g, ('0' + date.getDate()).slice(-2));
-        format = format.replace(/hh/g, ('0' + date.getHours()).slice(-2));
-        format = format.replace(/mm/g, ('0' + date.getMinutes()).slice(-2));
-        format = format.replace(/ss/g, ('0' + date.getSeconds()).slice(-2));
-        return format;
-    }
+        var accelerometer_x
+        var accelerometer_y
+        var accelerometer_z
 
-	function initialiseSensorTag()
-	{
-		// Create SensorTag CC2650 instance.
-		sensortag = evothings.tisensortag.createInstance(
-			evothings.tisensortag.CC2650_BLUETOOTH_SMART)
+        var magnetometer_x
+        var magnetometer_y
+        var magnetometer_z
 
-		// Uncomment to use SensorTag CC2541.
-		//sensortag = evothings.tisensortag.createInstance(
-		//	evothings.tisensortag.CC2541_BLUETOOTH_SMART)
+        var gyroscope_x
+        var gyroscope_y
+        var gyroscope_z
 
-		//
-		// Here sensors are set up.
-		//
-		// If you wish to use only one or a few sensors, just set up
-		// the ones you wish to use.
-		//
-		// First parameter to sensor function is the callback function.
-		// Several of the sensors take a millisecond update interval
-		// as the second parameter.
-		//
-		sensortag
-			.statusCallback(statusHandler)
-			.errorCallback(errorHandler)
-			.keypressCallback(keypressHandler)
-			.temperatureCallback(temperatureHandler, 1000)
-			.humidityCallback(humidityHandler, 1000)
-			.barometerCallback(barometerHandler, 1000)
-			.accelerometerCallback(accelerometerHandler, 1000)
-			.magnetometerCallback(magnetometerHandler, 1000)
-			.gyroscopeCallback(gyroscopeHandler, 1000)
-			.luxometerCallback(luxometerHandler, 1000)
-	}
+        var tag_id
 
-	function connect()
-	{
-		sensortag.connectToNearestDevice()
-	}
 
-	function disconnect()
-	{
-		sensortag.disconnectDevice()
-		resetSensorDisplayValues()
-	}
+        // timestamp型のフォーマットで現在日時を取得する
+        function getNowDate() {
+            // TODO UTCのままなのでJSTにしたい
+            var date = new Date()
+            var format = 'YYYY-MM-DDThh:mm:ss'
 
-	var sensorsOn = true
+            format = format.replace(/YYYY/g, date.getFullYear());
+            format = format.replace(/MM/g, ('0' + (date.getMonth() + 1)).slice(-2));
+            format = format.replace(/DD/g, ('0' + date.getDate()).slice(-2));
+            format = format.replace(/hh/g, ('0' + date.getHours()).slice(-2));
+            format = format.replace(/mm/g, ('0' + date.getMinutes()).slice(-2));
+            format = format.replace(/ss/g, ('0' + date.getSeconds()).slice(-2));
+            return format;
+        }
 
-	function toggleSensors()
-	{
-		if(sensorsOn)
-		{
-			sensortag.keypressOff()
-			sensortag.temperatureOff()
-			sensortag.humidityOff()
-			sensortag.barometerOff()
-			sensortag.accelerometerOff()
-			sensortag.magnetometerOff()
-			sensortag.gyroscopeOff()
-			sensortag.luxometerOff()
-			sensorsOn = false
-		}
-		else
-		{
-			sensortag.keypressOn()
-			sensortag.temperatureOn()
-			sensortag.humidityOn()
-			sensortag.barometerOn()
-			sensortag.accelerometerOn()
-			sensortag.magnetometerOn()
-			sensortag.gyroscopeOn()
-			sensortag.luxometerOn()
-			sensorsOn = true
-		}
-	}
+        function initialiseSensorTag() {
+            // Create SensorTag CC2650 instance.
+            sensortag = evothings.tisensortag.createInstance(
+                evothings.tisensortag.CC2650_BLUETOOTH_SMART)
 
-	function statusHandler(status)
-	{
-		if ('DEVICE_INFO_AVAILABLE' == status)
-		{
-			// Show a notification about that the firmware should be
-			// upgraded if the connected device is a SensorTag CC2541
-			// with firmware revision less than 1.5, since this the
-			// SensorTag library does not support these versions.
-			var upgradeNotice = document.getElementById('upgradeNotice')
-			if ('CC2541' == sensortag.getDeviceModel() &&
-				parseFloat(sensortag.getFirmwareString()) < 1.5)
-			{
-				upgradeNotice.classList.remove('hidden')
-			}
-			else
-			{
-				upgradeNotice.classList.add('hidden')
-			}
+            // Uncomment to use SensorTag CC2541.
+            //sensortag = evothings.tisensortag.createInstance(
+            //	evothings.tisensortag.CC2541_BLUETOOTH_SMART)
 
-			// Show device model and firmware version.
-			displayValue('DeviceModel', sensortag.getDeviceModel())
-			displayValue('FirmwareData', sensortag.getFirmwareString())
+            //
+            // Here sensors are set up.
+            //
+            // If you wish to use only one or a few sensors, just set up
+            // the ones you wish to use.
+            //
+            // First parameter to sensor function is the callback function.
+            // Several of the sensors take a millisecond update interval
+            // as the second parameter.
+            //
+            sensortag
+                .statusCallback(statusHandler)
+                .errorCallback(errorHandler)
+                .keypressCallback(keypressHandler)
+                .temperatureCallback(temperatureHandler, 1000)
+                .humidityCallback(humidityHandler, 1000)
+                .barometerCallback(barometerHandler, 1000)
+                .accelerometerCallback(accelerometerHandler, 1000)
+                .magnetometerCallback(magnetometerHandler, 1000)
+                .gyroscopeCallback(gyroscopeHandler, 1000)
+                .luxometerCallback(luxometerHandler, 1000)
+        }
 
-			// Show which sensors are not supported by the connected SensorTag.
-			if (!sensortag.isLuxometerAvailable())
-			{
-				document.getElementById('Luxometer').style.display = 'none'
-			}
-		}
+        function connect() {
+            sensortag.connectToNearestDevice()
+        }
 
-		displayValue('StatusData', status)
-	}
+        function disconnect() {
+            sensortag.disconnectDevice()
+            resetSensorDisplayValues()
+        }
 
-	function errorHandler(error)
-	{
-		console.log('Error: ' + error)
+        var sensorsOn = true
 
-		if (evothings.easyble.error.DISCONNECTED == error)
-		{
-			resetSensorDisplayValues()
-		}
-		else
-		{
-			displayValue('StatusData', 'Error: ' + error)
-		}
-	}
+        function toggleSensors() {
+            if (sensorsOn) {
+                sensortag.keypressOff()
+                sensortag.temperatureOff()
+                sensortag.humidityOff()
+                sensortag.barometerOff()
+                sensortag.accelerometerOff()
+                sensortag.magnetometerOff()
+                sensortag.gyroscopeOff()
+                sensortag.luxometerOff()
+                sensorsOn = false
+            } else {
+                sensortag.keypressOn()
+                sensortag.temperatureOn()
+                sensortag.humidityOn()
+                sensortag.barometerOn()
+                sensortag.accelerometerOn()
+                sensortag.magnetometerOn()
+                sensortag.gyroscopeOn()
+                sensortag.luxometerOn()
+                sensorsOn = true
+            }
+        }
 
-	function resetSensorDisplayValues()
-	{
-		// Clear current values.
-		var blank = '[Waiting for value]'
-		displayValue('StatusData', 'Press Connect to find a SensorTag')
-		displayValue('DeviceModel', '?')
-		displayValue('FirmwareData', '?')
-		displayValue('KeypressData', blank)
-		displayValue('TemperatureData', blank)
-		displayValue('AccelerometerData', blank)
-		displayValue('HumidityData', blank)
-		displayValue('MagnetometerData', blank)
-		displayValue('BarometerData', blank)
-		displayValue('GyroscopeData', blank)
-		displayValue('LuxometerData', blank)
+        function statusHandler(status) {
+            if ('DEVICE_INFO_AVAILABLE' == status) {
+                // Show a notification about that the firmware should be
+                // upgraded if the connected device is a SensorTag CC2541
+                // with firmware revision less than 1.5, since this the
+                // SensorTag library does not support these versions.
+                var upgradeNotice = document.getElementById('upgradeNotice')
+                if ('CC2541' == sensortag.getDeviceModel() &&
+                    parseFloat(sensortag.getFirmwareString()) < 1.5) {
+                    upgradeNotice.classList.remove('hidden')
+                } else {
+                    upgradeNotice.classList.add('hidden')
+                }
 
-		// Reset screen color.
-		setBackgroundColor('white')
-	}
+                // Show device model and firmware version.
+                displayValue('DeviceModel', sensortag.getDeviceModel())
+                displayValue('FirmwareData', sensortag.getFirmwareString())
 
-	function keypressHandler(data)
-	{
-		// Update background color.
-		switch (data[0])
-		{
-			case 0:
-				setBackgroundColor('white')
-				break;
-			case 1:
-				setBackgroundColor('red')
-				break;
-			case 2:
-				setBackgroundColor('blue')
-				break;
-			case 3:
-				setBackgroundColor('magenta')
-				break;
-		}
+                // Show which sensors are not supported by the connected SensorTag.
+                if (!sensortag.isLuxometerAvailable()) {
+                    document.getElementById('Luxometer').style.display = 'none'
+                }
+            }
 
-		// Update the value displayed.
-		var string = 'raw: 0x' + bufferToHexStr(data, 0, 1)
-		displayValue('KeypressData', string)
-	}
+            displayValue('StatusData', status)
+        }
 
-	function temperatureHandler(data)
-	{
-		// Calculate temperature from raw sensor data.
-		var values = sensortag.getTemperatureValues(data)
-		var ac = values.ambientTemperature
-		var af = sensortag.celsiusToFahrenheit(ac)
-		var tc = values.targetTemperature
-		var tf = sensortag.celsiusToFahrenheit(tc)
+        function errorHandler(error) {
+            console.log('Error: ' + error)
 
-		// Prepare the information to display.
-		var string =
-			//'raw: <span style="font-family: monospace;">0x' +
-			//	bufferToHexStr(data, 0, 4) + '</span><br/>' +
-			(tc >= 0 ? '+' : '') + tc.toFixed(2) + '&deg; C ' +
-			'(' + (tf >= 0 ? '+' : '') + tf.toFixed(2) + '&deg; F)' + '<br/>' +
-			(ac >= 0 ? '+' : '') + ac.toFixed(2) + '&deg; C ' +
-			'(' + (af >= 0 ? '+' : '') + af.toFixed(2) + '&deg; F) [amb]' +
-			'<br/>'
+            if (evothings.easyble.error.DISCONNECTED == error) {
+                resetSensorDisplayValues()
+            } else {
+                displayValue('StatusData', 'Error: ' + error)
+            }
+        }
 
-		// Update the value displayed.
-		displayValue('TemperatureData', string)
-	}
+        function resetSensorDisplayValues() {
+            // Clear current values.
+            var blank = '[Waiting for value]'
+            displayValue('StatusData', 'Press Connect to find a SensorTag')
+            displayValue('DeviceModel', '?')
+            displayValue('FirmwareData', '?')
+            displayValue('KeypressData', blank)
+            displayValue('TemperatureData', blank)
+            displayValue('AccelerometerData', blank)
+            displayValue('HumidityData', blank)
+            displayValue('MagnetometerData', blank)
+            displayValue('BarometerData', blank)
+            displayValue('GyroscopeData', blank)
+            displayValue('LuxometerData', blank)
 
-	function accelerometerHandler(data)
-	{
-		// Calculate the x,y,z accelerometer values from raw data.
-		var values = sensortag.getAccelerometerValues(data)
-		var x = values.x
-		var y = values.y
-		var z = values.z
+            // Reset screen color.
+            setBackgroundColor('white')
+        }
 
-		//var model = sensortag.getDeviceModel()
-		//var dataOffset = (model == 2 ? 6 : 0)
+        function keypressHandler(data) {
+            // Update background color.
+            switch (data[0]) {
+                case 0:
+                    setBackgroundColor('white')
+                    break;
+                case 1:
+                    setBackgroundColor('red')
+                    break;
+                case 2:
+                    setBackgroundColor('blue')
+                    break;
+                case 3:
+                    setBackgroundColor('magenta')
+                    break;
+            }
 
-		// Prepare the information to display.
-		string =
-			//'raw: <span style="font-family: monospace;">0x' +
-			//	bufferToHexStr(data, dataOffset, 6) + '</span><br/>' +
-			'x: ' + (x >= 0 ? '+' : '') + x.toFixed(5) + 'G<br/>' +
-			'y: ' + (y >= 0 ? '+' : '') + y.toFixed(5) + 'G<br/>' +
-			'z: ' + (z >= 0 ? '+' : '') + z.toFixed(5) + 'G<br/>'
+            // Update the value displayed.
+            var string = 'raw: 0x' + bufferToHexStr(data, 0, 1)
+            displayValue('KeypressData', string)
+        }
 
-		// Update the value displayed.
-        displayValue('AccelerometerData', string)
+        function temperatureHandler(data) {
+            // Calculate temperature from raw sensor data.
+            var values = sensortag.getTemperatureValues(data)
+            var ac = values.ambientTemperature
+            var af = sensortag.celsiusToFahrenheit(ac)
+            var tc = values.targetTemperature
+            var tf = sensortag.celsiusToFahrenheit(tc)
 
-        // TODO accelerationしか設定できていない、tagのIDが'tag_id'固定
-        var motionData = {
+            // Prepare the information to display.
+            var string =
+                //'raw: <span style="font-family: monospace;">0x' +
+                //	bufferToHexStr(data, 0, 4) + '</span><br/>' +
+                (tc >= 0 ? '+' : '') + tc.toFixed(2) + '&deg; C ' +
+                '(' + (tf >= 0 ? '+' : '') + tf.toFixed(2) + '&deg; F)' + '<br/>' +
+                (ac >= 0 ? '+' : '') + ac.toFixed(2) + '&deg; C ' +
+                '(' + (af >= 0 ? '+' : '') + af.toFixed(2) + '&deg; F) [amb]' +
+                '<br/>'
+
+            // Update the value displayed.
+            displayValue('TemperatureData', string)
+        }
+
+        function accelerometerHandler(data) {
+            // Calculate the x,y,z accelerometer values from raw data.
+            var values = sensortag.getAccelerometerValues(data)
+            var x = values.x
+            var y = values.y
+            var z = values.z
+
+            //TODO　別途Handler作ったほうがいいかも
+            var accelerometerValues = sensortag.getAccelerometerValues(data)
+            accelerometer_x = accelerometerValues.x
+            accelerometer_y = accelerometerValues.y
+            accelerometer_z = accelerometerValues.z
+
+            var gyroscopeValues = sensortag.getGyroscopeValues(data)
+            gyroscope_x = gyroscopeValues.x
+            gyroscope_y = gyroscopeValues.y
+            gyroscope_z = gyroscopeValues.z
+
+            var magnetometerValues = sensortag.getMagnetometerValues(data)
+            magnetometer_x = magnetometerValues.x
+            magnetometer_y = magnetometerValues.y
+            magnetometer_z = magnetometerValues.z
+
+            //var model = sensortag.getDeviceModel()
+            //var dataOffset = (model == 2 ? 6 : 0)
+
+            // Prepare the information to display.
+            string =
+                //'raw: <span style="font-family: monospace;">0x' +
+                //	bufferToHexStr(data, dataOffset, 6) + '</span><br/>' +
+                'x: ' + (x >= 0 ? '+' : '') + x.toFixed(5) + 'G<br/>' +
+                'y: ' + (y >= 0 ? '+' : '') + y.toFixed(5) + 'G<br/>' +
+                'z: ' + (z >= 0 ? '+' : '') + z.toFixed(5) + 'G<br/>'
+
+            // Update the value displayed.
+            displayValue('AccelerometerData', string)
+
+            // TODO accelerationしか設定できていない、tagのIDが'tag_id'固定
+            var motionData = {
                 "registerTimestamp": getNowDate(),
-                "accelerationmeter_x": x.toFixed(5),
-                "accelerationmeter_y": y.toFixed(5),
-                "accelerationmeter_z": z.toFixed(5),
-                "gyroscope_x": 0,
-                "gyroscope_y": 0,
-                "gyroscope_z": 0,
-                "magnetometer_x": 0,
-                "magnetometer_y": 0,
-                "magnetometer_z": 0
+                "accelerationmeter_x": accelerometer_x.toFixed(5),
+                "accelerationmeter_y": accelerometer_y.toFixed(5),
+                "accelerationmeter_z": accelerometer_z.toFixed(5),
+                "gyroscope_x": gyroscope_x.toFixed(5),
+                "gyroscope_y": gyroscope_y.toFixed(5),
+                "gyroscope_z": gyroscope_z.toFixed(5),
+                "magnetometer_x": magnetometer_x.toFixed(5),
+                "magnetometer_y": magnetometer_y.toFixed(5),
+                "magnetometer_z": magnetometer_z.toFixed(5)
             };
-        
-        $.ajax({
+
+            $.ajax({
                 type: 'POST',
                 dataType: 'json',
                 timeout: 10000,
-                url: 'http://192.168.13.4:8080/motion/tag_id',
+                url: 'http://192.168.13.3:8080/motion/tag_id',
                 scriptCharset: 'utf-8',
-                data : JSON.stringify(motionData),
+                data: JSON.stringify(motionData),
                 contentType: 'application/JSON',
                 success: function(data) {
                     displayValue('Status', 'send!')
@@ -374,153 +383,146 @@
                 }
 
             });
-	}
+        }
 
-	function humidityHandler(data)
-	{
-		// Calculate the humidity values from raw data.
-		var values = sensortag.getHumidityValues(data)
+        function humidityHandler(data) {
+            // Calculate the humidity values from raw data.
+            var values = sensortag.getHumidityValues(data)
 
-		// Calculate the humidity temperature (C and F).
-		var tc = values.humidityTemperature
-		var tf = sensortag.celsiusToFahrenheit(tc)
+            // Calculate the humidity temperature (C and F).
+            var tc = values.humidityTemperature
+            var tf = sensortag.celsiusToFahrenheit(tc)
 
-		// Calculate the relative humidity.
-		var h = values.relativeHumidity
+            // Calculate the relative humidity.
+            var h = values.relativeHumidity
 
-		// Prepare the information to display.
-		string =
-			//'raw: <span style="font-family: monospace;">0x' +
-			//	bufferToHexStr(data, 0, 4) + '</span><br/>'
-			(tc >= 0 ? '+' : '') + tc.toFixed(2) + '&deg; C ' +
-			'(' + (tf >= 0 ? '+' : '') + tf.toFixed(2) + '&deg; F)' + '<br/>' +
-			(h >= 0 ? '+' : '') + h.toFixed(2) + '% RH' + '<br/>'
+            // Prepare the information to display.
+            string =
+                //'raw: <span style="font-family: monospace;">0x' +
+                //	bufferToHexStr(data, 0, 4) + '</span><br/>'
+                (tc >= 0 ? '+' : '') + tc.toFixed(2) + '&deg; C ' +
+                '(' + (tf >= 0 ? '+' : '') + tf.toFixed(2) + '&deg; F)' + '<br/>' +
+                (h >= 0 ? '+' : '') + h.toFixed(2) + '% RH' + '<br/>'
 
-		// Update the value displayed.
-		displayValue('HumidityData', string)
-	}
+            // Update the value displayed.
+            displayValue('HumidityData', string)
+        }
 
-	function magnetometerHandler(data)
-	{
-		// Calculate the magnetometer values from raw sensor data.
-		var values = sensortag.getMagnetometerValues(data)
-		var x = values.x
-		var y = values.y
-		var z = values.z
+        function magnetometerHandler(data) {
+            // Calculate the magnetometer values from raw sensor data.
+            var values = sensortag.getMagnetometerValues(data)
+            var x = values.x
+            var y = values.y
+            var z = values.z
 
-		//var model = sensortag.getDeviceModel()
-		//var dataOffset = (model == 2 ? 12 : 0)
+            //var model = sensortag.getDeviceModel()
+            //var dataOffset = (model == 2 ? 12 : 0)
 
-		// Prepare the information to display.
-		string =
-			//'raw: <span style="font-family: monospace;">0x' +
-			//	bufferToHexStr(data, dataOffset, 6) + '</span><br/>' +
-			'x: ' + (x >= 0 ? '+' : '') + x.toFixed(5) + '&micro;T <br/>' +
-			'y: ' + (y >= 0 ? '+' : '') + y.toFixed(5) + '&micro;T <br/>' +
-			'z: ' + (z >= 0 ? '+' : '') + z.toFixed(5) + '&micro;T <br/>'
+            // Prepare the information to display.
+            string =
+                //'raw: <span style="font-family: monospace;">0x' +
+                //	bufferToHexStr(data, dataOffset, 6) + '</span><br/>' +
+                'x: ' + (x >= 0 ? '+' : '') + x.toFixed(5) + '&micro;T <br/>' +
+                'y: ' + (y >= 0 ? '+' : '') + y.toFixed(5) + '&micro;T <br/>' +
+                'z: ' + (z >= 0 ? '+' : '') + z.toFixed(5) + '&micro;T <br/>'
 
-		// Update the value displayed.
-		displayValue('MagnetometerData', string)
-	}
+            // Update the value displayed.
+            displayValue('MagnetometerData', string)
+        }
 
-	function barometerHandler(data)
-	{
-		// Calculate pressure from raw sensor data.
-		var values = sensortag.getBarometerValues(data)
-		var pressure = values.pressure
+        function barometerHandler(data) {
+            // Calculate pressure from raw sensor data.
+            var values = sensortag.getBarometerValues(data)
+            var pressure = values.pressure
 
-		// Prepare the information to display.
-		string =
-			//'raw: <span style="font-family: monospace;">0x' +
-			//	bufferToHexStr(data, 0, 4) + '</span><br/>' +
-			'Pressure: ' + pressure.toPrecision(5) + ' mbar<br/>'
+            // Prepare the information to display.
+            string =
+                //'raw: <span style="font-family: monospace;">0x' +
+                //	bufferToHexStr(data, 0, 4) + '</span><br/>' +
+                'Pressure: ' + pressure.toPrecision(5) + ' mbar<br/>'
 
-		// Update the value displayed.
-		displayValue('BarometerData', string)
-	}
+            // Update the value displayed.
+            displayValue('BarometerData', string)
+        }
 
-	function gyroscopeHandler(data)
-	{
-		// Calculate the gyroscope values from raw sensor data.
-		var values = sensortag.getGyroscopeValues(data)
-		var x = values.x
-		var y = values.y
-		var z = values.z
+        function gyroscopeHandler(data) {
+            // Calculate the gyroscope values from raw sensor data.
+            var values = sensortag.getGyroscopeValues(data)
+            var x = values.x
+            var y = values.y
+            var z = values.z
 
-		// Prepare the information to display.
-		string =
-			//'raw: <span style="font-family: monospace;">0x' +
-			//	bufferToHexStr(data, 0, 6) + '</span><br/>' +
-			'x: ' + (x >= 0 ? '+' : '') + x.toFixed(5) + '<br/>' +
-			'y: ' + (y >= 0 ? '+' : '') + y.toFixed(5) + '<br/>' +
-			'z: ' + (z >= 0 ? '+' : '') + z.toFixed(5) + '<br/>'
+            // Prepare the information to display.
+            string =
+                //'raw: <span style="font-family: monospace;">0x' +
+                //	bufferToHexStr(data, 0, 6) + '</span><br/>' +
+                'x: ' + (x >= 0 ? '+' : '') + x.toFixed(5) + '<br/>' +
+                'y: ' + (y >= 0 ? '+' : '') + y.toFixed(5) + '<br/>' +
+                'z: ' + (z >= 0 ? '+' : '') + z.toFixed(5) + '<br/>'
 
-		// Update the value displayed.
-		displayValue('GyroscopeData', string)
-	}
+            // Update the value displayed.
+            displayValue('GyroscopeData', string)
+        }
 
-	function luxometerHandler(data)
-	{
-		var value = sensortag.getLuxometerValue(data)
+        function luxometerHandler(data) {
+            var value = sensortag.getLuxometerValue(data)
 
-		// Prepare the information to display.
-		string =
-			//'raw: <span style="font-family: monospace;">0x' +
-			//	bufferToHexStr(data, 0, 2) + '</span><br/>' +
-			'Light level: ' + value.toPrecision(5) + ' lux<br/>'
+            // Prepare the information to display.
+            string =
+                //'raw: <span style="font-family: monospace;">0x' +
+                //	bufferToHexStr(data, 0, 2) + '</span><br/>' +
+                'Light level: ' + value.toPrecision(5) + ' lux<br/>'
 
-		// Update the value displayed.
-		displayValue('LuxometerData', string)
-	}
+            // Update the value displayed.
+            displayValue('LuxometerData', string)
+        }
 
-	function displayValue(elementId, value)
-	{
-		document.getElementById(elementId).innerHTML = value
-	}
+        function displayValue(elementId, value) {
+            document.getElementById(elementId).innerHTML = value
+        }
 
-	function setBackgroundColor(color)
-	{
-		document.documentElement.style.background = color
-		document.body.style.background = color
-	}
+        function setBackgroundColor(color) {
+            document.documentElement.style.background = color
+            document.body.style.background = color
+        }
 
-	/**
-	 * Convert byte buffer to hex string.
-	 * @param buffer - an Uint8Array
-	 * @param offset - byte offset
-	 * @param numBytes - number of bytes to read
-	 * @return string with hex representation of bytes
-	 */
-	function bufferToHexStr(buffer, offset, numBytes)
-	{
-		var hex = ''
-		for (var i = 0; i < numBytes; ++i)
-		{
-			hex += byteToHexStr(buffer[offset + i])
-		}
-		return hex
-	}
+        /**
+         * Convert byte buffer to hex string.
+         * @param buffer - an Uint8Array
+         * @param offset - byte offset
+         * @param numBytes - number of bytes to read
+         * @return string with hex representation of bytes
+         */
+        function bufferToHexStr(buffer, offset, numBytes) {
+            var hex = ''
+            for (var i = 0; i < numBytes; ++i) {
+                hex += byteToHexStr(buffer[offset + i])
+            }
+            return hex
+        }
 
-	/**
-	 * Convert byte number to hex string.
-	 */
-	function byteToHexStr(d)
-	{
-		if (d < 0) { d = 0xFF + d + 1 }
-		var hex = Number(d).toString(16)
-		var padding = 2
-		while (hex.length < padding)
-		{
-			hex = '0' + hex
-		}
-		return hex
-	}
+        /**
+         * Convert byte number to hex string.
+         */
+        function byteToHexStr(d) {
+            if (d < 0) {
+                d = 0xFF + d + 1
+            }
+            var hex = Number(d).toString(16)
+            var padding = 2
+            while (hex.length < padding) {
+                hex = '0' + hex
+            }
+            return hex
+        }
 
-	document.addEventListener(
-		'deviceready',
-		function() { evothings.scriptsLoaded(initialiseSensorTag) },
-		false)
-	</script>
+        document.addEventListener(
+            'deviceready',
+            function() {
+                evothings.scriptsLoaded(initialiseSensorTag)
+            },
+            false)
+    </script>
 
 </body>
 
